@@ -1,32 +1,59 @@
-﻿using BudgetApi.Models;
+﻿using BudgetApi.Data;
+using BudgetApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BudgetApi.Services
 {
     public class CategoryService : ICategoryService
     {
-        public Task<Category> CreateCategoryAsync(Category category)
+        private readonly AppDbContext _context;
+        public CategoryService(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<bool> DeleteCategoryAsync(int id)
+        public async Task<Category> CreateCategoryAsync(Category category)
         {
-            throw new NotImplementedException();
+            _context.Categories.Add(category);
+            await  _context.SaveChangesAsync();
+
+            return category;
         }
 
-        public Task<Category> GetAllCategoryAsync()
+        public async Task<bool> DeleteCategoryAsync(int id)
         {
-            throw new NotImplementedException();
+            var existingCategory = await _context.Categories.FindAsync(id);
+            if(existingCategory == null)
+            {
+                return false;
+            }
+            _context.Categories.Remove(existingCategory);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public Task<Category> GetCategoryByIdAsync(int id)
+        public async Task<List<Category>> GetAllCategoryAsync()
+            => await _context.Categories.ToListAsync();
+
+        public async Task<Category?> GetCategoryByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var existingCategory =  await _context.Categories.FindAsync(id);
+
+            return existingCategory;
         }
 
-        public Task<bool> UpdateCategoryAsync(int id, Category category)
+        public async Task<bool> UpdateCategoryAsync(int id, Category category)
         {
-            throw new NotImplementedException();
+            var existingCategory = await _context.Categories.FindAsync(id);
+            if(existingCategory == null)
+            {
+                return false;
+            }
+            existingCategory.Name = category.Name;
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
