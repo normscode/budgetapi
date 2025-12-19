@@ -8,6 +8,6 @@
         public User User { get; set; } = null!;
 
         public string Name { get; set; } = string.Empty;
-        public ICollection<Transaction> Transactions { get; set; } 
+        public ICollection<Transaction> Transactions { get; set; } = null!;
     }
 }
