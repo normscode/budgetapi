@@ -1,3 +1,4 @@
+using BudgetApi.Contracts;
 using BudgetApi.Data;
 using BudgetApi.Services;
 using Microsoft.EntityFrameworkCore;

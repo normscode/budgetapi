@@ -6,8 +6,7 @@
 
         public int UserId { get; set; }
         public User User { get; set; } = null!;
-
         public string Name { get; set; } = string.Empty;
-        public ICollection<Transaction> Transactions { get; set; } = null!;
+        public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 }

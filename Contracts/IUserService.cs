@@ -1,6 +1,6 @@
 ﻿using BudgetApi.Models;
 
-namespace BudgetApi.Services
+namespace BudgetApi.Contracts
 {
     public interface IUserService
     {

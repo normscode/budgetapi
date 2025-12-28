@@ -1,5 +1,6 @@
-﻿using BudgetApi.Models;
-using BudgetApi.Services;
+﻿using BudgetApi.Contracts;
+using BudgetApi.Dto;
+using BudgetApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +34,7 @@ namespace BudgetApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateCategory(Category category)
+        public async Task<ActionResult> CreateCategory(CreateCategoryDto category)
         {
             var createdCategory = await _categoryService.CreateCategoryAsync(category);
             return CreatedAtAction(nameof(GetCategoryById), new { id = createdCategory.Id }, createdCategory);

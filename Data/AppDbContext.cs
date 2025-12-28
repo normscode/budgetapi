@@ -36,7 +36,7 @@ namespace BudgetApi.Data
                 .HasMany(c => c.Transactions)
                 .WithOne(t => t.Category)
                 .HasForeignKey(t => t.CategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Budget>()
                 .HasIndex(b => new { b.UserId, b.Month, b.Year })

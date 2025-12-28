@@ -1,4 +1,6 @@
-﻿using BudgetApi.Data;
+﻿using BudgetApi.Contracts;
+using BudgetApi.Data;
+using BudgetApi.Dto;
 using BudgetApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,12 +14,24 @@ namespace BudgetApi.Services
             _context = context;
         }
 
-        public async Task<Category> CreateCategoryAsync(Category category)
+        public async Task<CreateCategoryResDto> CreateCategoryAsync(CreateCategoryDto category)
         {
-            _context.Categories.Add(category);
+            var newCategory = new Category
+            {
+                Name = category.Name,
+                UserId = category.UserId
+            };
+
+            _context.Categories.Add(newCategory);
+       
             await  _context.SaveChangesAsync();
 
-            return category;
+            return new CreateCategoryResDto
+            {
+                Id = newCategory.Id,
+                Name = newCategory.Name,
+                UserId = newCategory.UserId
+            };
         }
 
         public async Task<bool> DeleteCategoryAsync(int id)
